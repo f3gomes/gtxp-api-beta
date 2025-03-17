@@ -12,6 +12,11 @@ userRouter.post("/user/new", validateData(userSchema), userController.postUser);
 userRouter.get("/user/list", middleware.auth, userController.getUsers);
 userRouter.get("/user/verify/:id", userController.getVerifyUserEmail);
 userRouter.get("/user/:id", userController.getUserById);
+userRouter.get(
+  "/user/email/:email",
+  middleware.auth,
+  userController.getUserByEmail
+);
 
 userRouter.patch("/user/edit", middleware.auth, userController.patchUser);
 userRouter.patch(

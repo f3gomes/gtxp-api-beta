@@ -10,6 +10,28 @@ import {
   generateEmailResetPassword,
 } from "../templates/confirm.email";
 
+const getUserByEmail = async (req: Request, res: Response): Promise<any> => {
+  const { email } = req.params;
+
+  try {
+    const user = await userService.getUserByEmail(email);
+
+    if (!user) {
+      return res.status(401).json({ message: "Usuário não encontrado" });
+    }
+
+    const { password, ...rest } = user;
+    const updatedUser = rest;
+
+    return res.status(200).json({ updatedUser });
+  } catch (error: any) {
+    const errorMessages = error.message.split("\n");
+    const lastErrorMessage = errorMessages[errorMessages.length - 1];
+
+    return res.status(500).json({ error: lastErrorMessage });
+  }
+};
+
 const getUserById = async (req: Request, res: Response): Promise<any> => {
   const { id } = req.params;
 
@@ -272,6 +294,7 @@ export default {
   patchRequestResetPassword,
   patchResetPassword,
   getVerifyUserEmail,
+  getUserByEmail,
   getUserById,
   patchUser,
   postUser,
