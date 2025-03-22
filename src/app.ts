@@ -29,4 +29,4 @@ app.use("/api", appointmentRouter);
 
 export default app;
 
-// reset 16-03-2025
+// update email credentials
