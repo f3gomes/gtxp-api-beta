@@ -4,7 +4,7 @@ const prisma: any = new PrismaClient();
 
 const createFeedback = async (data: any): Promise<any> => {
   const user = await prisma.user.findUnique({
-    where: { email: data.email, visible: true },
+    where: { email: data.email },
   });
 
   if (!user) {
