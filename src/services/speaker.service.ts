@@ -9,7 +9,8 @@ const findSpeakerById = async (id: string) => {
 };
 
 const createSpeaker = async (data: Speaker): Promise<any> => {
-  return prisma.speaker.create({ data });
+  const speaker = await prisma.speaker.create({ data });
+  return speaker;
 };
 
 const getSpeakersList = async (): Promise<Object> => {
@@ -18,8 +19,26 @@ const getSpeakersList = async (): Promise<Object> => {
   return speakers;
 };
 
+const updateSpeaker = async (id: string, data: any): Promise<any> => {
+  const speaker = await findSpeakerById(id);
+
+  if (!speaker) {
+    throw new Error("Usuário não encontrado");
+  }
+
+  if (speaker) {
+    const updated = await prisma.speaker.update({
+      where: { id },
+      data,
+    });
+
+    return updated;
+  }
+};
+
 export default {
   createSpeaker,
   getSpeakersList,
   findSpeakerById,
+  updateSpeaker,
 };
