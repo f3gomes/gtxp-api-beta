@@ -20,6 +20,7 @@ model Speaker {
   role            String
   company         String
   description     String?
+  speech          String?
   linkedin        String
   instagram       String
   twitter         String
