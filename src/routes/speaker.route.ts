@@ -20,3 +20,9 @@ speakerRouter.post(
   validateData(speakerSchema),
   speakerController.postSpeaker
 );
+
+speakerRouter.patch(
+  "/speaker/edit/:id",
+  middleware.auth,
+  speakerController.patchSpeaker
+);

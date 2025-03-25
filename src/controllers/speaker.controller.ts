@@ -53,8 +53,27 @@ const getSpeakers = async (
   }
 };
 
+const patchSpeaker = async (
+  req: Request,
+  res: Response
+): Promise<Speaker | any> => {
+  const { id } = req.params;
+
+  try {
+    const speaker = await speakerService.updateSpeaker(id, req.body);
+    return res.status(200).json({ speaker });
+  } catch (error: any) {
+    const errorMessages = error.message.split("\n");
+    const lastErrorMessage = errorMessages[errorMessages.length - 1];
+
+    res.status(500).json({ error: lastErrorMessage });
+    console.log(error);
+  }
+};
+
 export default {
   getSpeakerById,
   postSpeaker,
   getSpeakers,
+  patchSpeaker,
 };
