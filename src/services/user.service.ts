@@ -47,7 +47,7 @@ const createUser = async (data: User): Promise<any> => {
 const updateUser = async (data: User): Promise<any> => {
   const { email } = data;
 
-  const user: any = findUserByEmail(email);
+  const user = await findUserByEmail(email);
 
   if (!user) {
     throw new Error("Usuário não encontrado");
