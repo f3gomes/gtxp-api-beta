@@ -78,7 +78,12 @@ const updateUser = async (data: User): Promise<any> => {
 };
 
 const getUsersList = async (): Promise<Object> => {
-  const users = await prisma.user.findMany({ where: { visible: true } });
+  const users = await prisma.user.findMany({
+    where: { visible: true },
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   const total = users.length;
 
