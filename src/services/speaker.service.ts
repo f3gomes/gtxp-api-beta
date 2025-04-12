@@ -14,7 +14,11 @@ const createSpeaker = async (data: Speaker): Promise<any> => {
 };
 
 const getSpeakersList = async (): Promise<Object> => {
-  const speakers = await prisma.speaker.findMany();
+  const speakers = await prisma.speaker.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
 
   return speakers;
 };

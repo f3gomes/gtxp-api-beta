@@ -32,7 +32,11 @@ const createPost = async (data: Post): Promise<any> => {
 };
 
 const getAllPosts = async (): Promise<Post[]> => {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return posts;
 };
