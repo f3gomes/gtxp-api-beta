@@ -47,13 +47,24 @@ const createUser = async (data: User): Promise<any> => {
 const updateUser = async (data: User): Promise<any> => {
   const { email } = data;
 
-  const user = findUserByEmail(email);
+  const user = await findUserByEmail(email);
 
   if (!user) {
     throw new Error("Usuário não encontrado");
   }
 
   if (user) {
+    await prisma.post.updateMany({
+      where: {
+        userId: user?.id,
+      },
+
+      data: {
+        name: data.name,
+        profileImg: data.profileImgUrl,
+      },
+    });
+
     await prisma.user.update({
       where: {
         email,
