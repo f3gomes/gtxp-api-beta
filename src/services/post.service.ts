@@ -4,15 +4,19 @@ const prisma = new PrismaClient();
 
 const createPost = async (data: Post): Promise<any> => {
   const user = await prisma.user.findUnique({
-    where: { email: data.email, visible: true },
+    where: { email: data.email },
   });
 
   if (!user) {
-    throw new Error("usuário não encontrado");
+    throw new Error("Usuário não encontrado");
+  }
+
+  if (!user?.visible) {
+    throw new Error("Altere seu perfil para poder publicar");
   }
 
   if (!user?.verified) {
-    throw new Error("e-mail não verificado");
+    throw new Error("E-mail não verificado");
   }
 
   const post = await prisma.post.create({
